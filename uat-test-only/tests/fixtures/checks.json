@@ -1,0 +1,11 @@
+{
+  "checks": [
+    {
+      "tc_id": "TC-DEMO-006",
+      "name": "python chạy được (AC-6)",
+      "cmd": "python --version 2>&1 || python3 --version 2>&1",
+      "timeout_s": 60,
+      "expect": { "exit_code": 0, "output_regex": ["Python 3\\."] }
+    }
+  ]
+}

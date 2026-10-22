@@ -1,0 +1,244 @@
+{
+  "feature": "cua-hang-mau",
+  "evidence_profile": "signoff",
+  "test_cases": [
+    {
+      "tc_id": "TC-DEMO-001",
+      "title": "Bấm Tăng thì số lượng thành 1",
+      "type": "GREEN",
+      "platform": "web",
+      "persona": "P-THU-NGAN",
+      "journey_ref": "J-01",
+      "priority": "P0",
+      "severity_if_fail": "S1",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-1",
+      "oracle_source": "Diễn tập §AC-1: mỗi lần bấm Tăng cộng 1",
+      "catches_bug": "nút Tăng không cộng",
+      "coverage_ids": [
+        "COV-01"
+      ],
+      "backend_policy": "live",
+      "steps": "Mở trang chủ; bấm nút Tăng",
+      "expected": "Ô số lượng hiện 1"
+    },
+    {
+      "tc_id": "TC-DEMO-002",
+      "title": "API health trả ok",
+      "type": "GREEN",
+      "platform": "api",
+      "persona": "P-HE-THONG",
+      "journey_ref": "J-02",
+      "priority": "P1",
+      "severity_if_fail": "S2",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-2",
+      "oracle_source": "Diễn tập §AC-2: /api/health trả {ok:true}",
+      "catches_bug": "health sai",
+      "coverage_ids": [
+        "COV-02"
+      ],
+      "backend_policy": "live",
+      "steps": "GET /api/health",
+      "expected": "HTTP 200, thân {\"ok\": true}"
+    },
+    {
+      "tc_id": "TC-DEMO-003",
+      "title": "Tiêu đề trang là Cửa hàng mẫu v2",
+      "type": "GREEN",
+      "platform": "web",
+      "persona": "P-THU-NGAN",
+      "journey_ref": "J-01",
+      "priority": "P2",
+      "severity_if_fail": "S3",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-3",
+      "oracle_source": "Diễn tập §AC-3 (CỐ Ý sai để chứng minh ca đỏ)",
+      "catches_bug": "tiêu đề cũ",
+      "coverage_ids": [
+        "COV-03"
+      ],
+      "backend_policy": "live",
+      "steps": "Mở trang chủ",
+      "expected": "Tiêu đề cấp 1 là «Cửa hàng mẫu v2»"
+    },
+    {
+      "tc_id": "TC-DEMO-004",
+      "title": "Trang giới thiệu hiện tiêu đề",
+      "type": "GREEN",
+      "platform": "web",
+      "persona": "P-KHACH",
+      "journey_ref": "J-03",
+      "priority": "P1",
+      "severity_if_fail": "S2",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-4",
+      "oracle_source": "Diễn tập §AC-4",
+      "catches_bug": "trang giới thiệu hỏng",
+      "coverage_ids": [
+        "COV-04"
+      ],
+      "backend_policy": "live",
+      "steps": "Mở trang chủ; bấm liên kết Giới thiệu",
+      "expected": "Tiêu đề cấp 1 là «Giới thiệu»"
+    },
+    {
+      "tc_id": "TC-DEMO-005",
+      "title": "Ca không có nguồn oracle",
+      "type": "GREEN",
+      "platform": "web",
+      "persona": "P-KHACH",
+      "journey_ref": "J-03",
+      "priority": "P3",
+      "severity_if_fail": "S4",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-5",
+      "oracle_source": "",
+      "catches_bug": "-",
+      "coverage_ids": [
+        "COV-05"
+      ],
+      "backend_policy": "live",
+      "steps": "Mở trang chủ",
+      "expected": "Trang mở được"
+    },
+    {
+      "tc_id": "TC-DEMO-006",
+      "title": "Python chạy được",
+      "type": "GREEN",
+      "platform": "cli",
+      "persona": "P-VAN-HANH",
+      "journey_ref": "J-04",
+      "priority": "P2",
+      "severity_if_fail": "S3",
+      "oracle_type": "Claim",
+      "rule_ref": "AC-6",
+      "oracle_source": "Diễn tập §AC-6",
+      "catches_bug": "thiếu python",
+      "coverage_ids": [
+        "COV-06"
+      ],
+      "backend_policy": "live",
+      "steps": "python --version",
+      "expected": "thoát mã 0, in «Python»"
+    },
+    {
+      "persona": "P-KE-TOAN",
+      "journey_ref": "J-02",
+      "oracle_type": "Statute",
+      "backend_policy": "live",
+      "tc_id": "TC-DEMO-007",
+      "title": "Chỉ vai kế toán xem được dữ liệu nhạy cảm",
+      "type": "SECURITY",
+      "platform": "api",
+      "priority": "P0",
+      "severity_if_fail": "S1",
+      "rule_ref": "AC-SEC-1",
+      "oracle_source": "Diễn tập §AC-SEC-1: /api/secret chỉ mở cho vai ke-toan",
+      "catches_bug": "máy chủ bỏ kiểm quyền → ai cũng đọc được số tiền và CCCD",
+      "coverage_ids": [
+        "COV-07"
+      ],
+      "steps": "Gọi /api/secret bằng vai không được phép và bằng vai vô danh",
+      "expected": "Bị chặn với mã 401 hoặc 403, và thân phản hồi không chứa cccd",
+      "access": {
+        "url": "/api/secret",
+        "method": "GET",
+        "allow": [
+          "ke-toan"
+        ],
+        "deny_status": [
+          401,
+          403
+        ],
+        "must_not_contain": [
+          "cccd"
+        ]
+      }
+    },
+    {
+      "persona": "P-KE-TOAN",
+      "journey_ref": "J-02",
+      "oracle_type": "Statute",
+      "backend_policy": "live",
+      "tc_id": "TC-DEMO-008",
+      "title": "Trạng thái đơn đã ghi xuống đúng",
+      "type": "DATA",
+      "platform": "api",
+      "priority": "P0",
+      "severity_if_fail": "S1",
+      "rule_ref": "AC-DATA-1",
+      "oracle_source": "Diễn tập §AC-DATA-1: đơn id=1 phải ở trạng thái REJECTED",
+      "catches_bug": "màn hình báo đã từ chối nhưng dưới cơ sở dữ liệu vẫn là PENDING",
+      "coverage_ids": [
+        "COV-08"
+      ],
+      "steps": "Đọc trạng thái đơn id=1 từ cơ sở dữ liệu",
+      "expected": "don.trang_thai của id=1 là REJECTED",
+      "db_assert": {
+        "query": "SELECT trang_thai FROM don WHERE id = 1",
+        "expect": {
+          "value": "REJECTED",
+          "rows": 1
+        }
+      }
+    },
+    {
+      "persona": "P-KE-TOAN",
+      "journey_ref": "J-02",
+      "oracle_type": "Statute",
+      "backend_policy": "live",
+      "tc_id": "TC-DEMO-009",
+      "title": "Gửi lại cùng khoá không sinh đơn thừa",
+      "type": "DATA",
+      "platform": "api",
+      "priority": "P1",
+      "severity_if_fail": "S2",
+      "rule_ref": "AC-IDEM-1",
+      "oracle_source": "Diễn tập §AC-IDEM-1: một khoá idempotency → tối đa một đơn",
+      "catches_bug": "người dùng bấm lại khi giao diện timeout → hệ thống tạo nhiều đơn",
+      "coverage_ids": [
+        "COV-09"
+      ],
+      "steps": "Gửi đồng thời 5 request POST /api/don cùng một Idempotency-Key",
+      "expected": "Chỉ có đúng 1 đơn mang khoá ấy trong cơ sở dữ liệu",
+      "idempotency": {
+        "url": "/api/don",
+        "method": "POST",
+        "key_header": "Idempotency-Key",
+        "concurrency": 5,
+        "body": {},
+        "count_query": "SELECT count(*) FROM don WHERE idem_key = ?",
+        "expect_rows": 1
+      }
+    },
+    {
+      "persona": "P-KE-TOAN",
+      "journey_ref": "J-02",
+      "oracle_type": "Statute",
+      "backend_policy": "live",
+      "tc_id": "TC-DEMO-010",
+      "title": "Điểm kiểm sức khoẻ đáp ứng trong ngân sách",
+      "type": "PERFORMANCE",
+      "platform": "api",
+      "priority": "P2",
+      "severity_if_fail": "S3",
+      "rule_ref": "AC-PERF-1",
+      "oracle_source": "Diễn tập §AC-PERF-1: ngân sách p95 do người đặt là 2000 ms",
+      "catches_bug": "điểm kiểm sức khoẻ chậm dần mà không ai thấy",
+      "coverage_ids": [
+        "COV-10"
+      ],
+      "steps": "Gọi /api/health 10 lượt, tính p95",
+      "expected": "p95 không vượt 2000 ms và không có lỗi 5xx",
+      "perf_budget": {
+        "url": "/api/health",
+        "method": "GET",
+        "p95_ms": 2000,
+        "sample": 10,
+        "warmup": 2,
+        "max_error_rate": 0.0
+      }
+    }
+  ]
+}
