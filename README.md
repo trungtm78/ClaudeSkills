@@ -11,3 +11,7 @@ Chép từng thư mục skill vào `~/.claude/skills/` (mỗi skill có `SKILL.m
 - `hallmark` được chép nội dung thật từ `~/.agents/skills/hallmark` (ở máy gốc nó là liên kết).
 - Đã **che** thông tin nhạy cảm: tài khoản dev, địa chỉ máy chủ prod (`<PROD_HOST>`), email tài khoản thử. Không có khoá/token thật. Tài khoản/mật khẩu mẫu trong các tệp test của skill UAT là giá trị giả.
 - Không đưa lên: `gstack/` và `gstack.bak/`, `synced/`, `.trash/`, `.harness-sync/`, `_luu-tru/` (lưu trữ), `oc-pipeline/` (không còn là skill).
+
+## Tài liệu và script kèm theo
+- `AUTONOMOUS_EXECUTION_PROTOCOL.md`: quy ước chạy tự động (khi nào tiếp tục, khi nào dừng, việc cấm).
+- `setup-claude-autonomous.bat`: script Windows cài cấu hình Claude Code chạy tự động.
